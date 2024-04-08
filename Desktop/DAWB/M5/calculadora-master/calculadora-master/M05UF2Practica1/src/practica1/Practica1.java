@@ -21,7 +21,6 @@ public class Practica1 {
         double res = 0;
         String operacion;
         boolean comprobar = false;
-
         do {
 
             String numero1;
@@ -38,9 +37,9 @@ public class Practica1 {
                         + " x = multiplicar \n / = dividir \n * = elevar primer num al segon num."
                         + "\n % = residu");
                 operacion = sc.nextLine();
-                if (operacion.equals("+") || operacion.equals("-") || operacion.equals("x")
-                        || operacion.equals("X") || operacion.equals("/") || operacion.equals("%")
-                        || operacion.equals("*")) {
+                if (operacion.equals("+") || operacion.equals("-") || 
+                        operacion.equalsIgnoreCase("x") || operacion.equals("/") 
+                        || operacion.equals("%")|| operacion.equals("*")) {
                     comprobar = true;
                 } else {
                     comprobar = false;
@@ -54,12 +53,11 @@ public class Practica1 {
             } while (!numero2.matches("[+-]?[\\d]*[.]?[\\d]+"));
             double nume2 = Double.parseDouble(numero2);
             double n2 = new Double(numero2);
-
             do {
                 comprobar = true;
                 switch (operacion) {
                     case "+":
-                        res = n2 + n2;
+                        res = n1 + n2;
                         break;
                     case "-":
                         res = n1 - n2;
@@ -81,7 +79,7 @@ public class Practica1 {
                         res = n1 / n2;
                         break;
                     case "*":
-                        res = Math.pow(n1, n1);
+                        res = Math.pow(n1, n2);
                         break;
                     case "%":
                         while (n2 == 0) {
@@ -116,6 +114,6 @@ public class Practica1 {
                         comprobar = false;
                 }
             } while (comprobar != true);
-        } while (operacion.equals("s") || operacion.equals("S"));
+        } while (operacion.equalsIgnoreCase("s"));
     }
 }
