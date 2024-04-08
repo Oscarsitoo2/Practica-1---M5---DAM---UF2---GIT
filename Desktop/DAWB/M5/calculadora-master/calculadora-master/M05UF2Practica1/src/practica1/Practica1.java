@@ -23,19 +23,12 @@ public class Practica1 {
         boolean comprobar = false;
         do {
 
-            String numero1;
             do {
-                System.out.println("\n Introdueix el primer numero. ");
-                numero1 = sc.nextLine();
-            } while (!numero1.matches("[+-]?[\\d]*[.]?[\\d]+"));
-            double nume1 = Double.parseDouble(numero1);
-            double n1 = new Double(numero1);
-
-            do {
-                System.out.println("\n Operació? (Indica el signe)");
-                System.out.println("+ = sumar \n - = restar \n"
-                        + " x = multiplicar \n / = dividir \n * = elevar primer num al segon num."
-                        + "\n % = residu");
+                System.out.println("\n |---Bienvenido a la calculadora KEKOÑETE!!!---|");
+                System.out.println("\n Operació? (Indica el signe)\n");
+                System.out.println(" + | sumar \n - | restar \n"
+                        + " x | multiplicar \n / | dividir \n * | elevar primer num al segon num."
+                        + "\n % | residu");
                 operacion = sc.nextLine();
                 if (operacion.equals("+") || operacion.equals("-") || 
                         operacion.equalsIgnoreCase("x") || operacion.equals("/") 
@@ -46,9 +39,17 @@ public class Practica1 {
                 }
             } while (comprobar != true);
 
+            String numero1;
+            do {
+                System.out.println("\n --- Introdueix el primer numero. ---");
+                numero1 = sc.nextLine();
+            } while (!numero1.matches("[+-]?[\\d]*[.]?[\\d]+"));
+            double nume1 = Double.parseDouble(numero1);
+            double n1 = new Double(numero1);
+
             String numero2;
             do {
-                System.out.println("\n Introdueix el segon numero.");
+                System.out.println("\n ---Introdueix el segon numero.---");
                 numero2 = sc.nextLine();
             } while (!numero2.matches("[+-]?[\\d]*[.]?[\\d]+"));
             double nume2 = Double.parseDouble(numero2);
@@ -84,8 +85,8 @@ public class Practica1 {
                     case "%":
                         while (n2 == 0) {
                             do {
-                                System.err.println(" Al denominador hi ha un zero \n"
-                                        + "per a  evitar errors coloca un altre valor.");
+                                System.err.println("---Al denominador hi ha un zero \n"
+                                        + "per a  evitar errors coloca un altre valor.---");
                                 numero2 = sc.nextLine();
                             } while (!numero2.matches("[+-]?[\\d]*[.]?[\\d]+"));
                             nume2 = Double.parseDouble(numero2);
@@ -97,7 +98,7 @@ public class Practica1 {
             } while (comprobar != true);
 
             System.out.println("(" + numero1 + ") " + operacion + " (" + numero2 + ")" + " = " + res);
-            System.out.println("\n Vols continuar operant? \n");
+            System.out.println("\n ---Vols continuar operant?--- \n");
             System.out.println(" [s/n]");
             do {
                 comprobar = true;
@@ -114,6 +115,8 @@ public class Practica1 {
                         comprobar = false;
                 }
             } while (comprobar != true);
-        } while (operacion.equalsIgnoreCase("s"));
+        } while (operacion.equals("s") || operacion.equals("S"));
+        System.out.println("\n\t|---GOOD BYE---|");
     }
 }
+
