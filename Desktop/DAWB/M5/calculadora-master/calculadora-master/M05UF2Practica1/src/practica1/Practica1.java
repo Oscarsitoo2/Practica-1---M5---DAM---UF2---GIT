@@ -18,105 +18,95 @@ public class Practica1 {
      */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        double res = 0;
-        String operacion;
-        boolean comprobar = false;
+        boolean continuar;
+
         do {
+            String operacion = obtenerOperacion(sc);
+            double num1 = obtenerNumero(sc, "primer");
+            double num2 = obtenerNumero(sc, "segundo");
 
-            do {
-                System.out.println("\n |---Bienvenido a la calculadora KEKOÑETE!!!---|");
-                System.out.println("\n Operació? (Indica el signe)\n");
-                System.out.println(" + | sumar \n - | restar \n"
-                        + " x | multiplicar \n / | dividir \n * | elevar primer num al segon num."
-                        + "\n % | residu");
-                operacion = sc.nextLine();
-                if (operacion.equals("+") || operacion.equals("-") || 
-                        operacion.equalsIgnoreCase("x") || operacion.equals("/") 
-                        || operacion.equals("%")|| operacion.equals("*")) {
-                    comprobar = true;
-                } else {
-                    comprobar = false;
+            double resultado = calcularResultado(operacion, num1, num2);
+            System.out.println("(" + num1 + ") " + operacion + " (" + num2 + ")" + " = " + resultado);
+
+            continuar = continuarOperando(sc);
+        } while (continuar);
+
+        System.out.println("\n\t|---ADIOS---|");
+    }
+
+    public static String obtenerOperacion(Scanner sc) {
+        String operacion;
+        do {
+            System.out.println("\n |---Bienvenido a la calculadora KEKOÑETE!!!---|");
+            System.out.println("\n Operación? (Indica el signo)\n");
+            System.out.println(" + | sumar \n - | restar \n"
+                    + " x | multiplicar \n / | dividir \n * | elevar primer num al segon num."
+                    + "\n % | residu");
+            operacion = sc.nextLine();
+        } while (!esOperacionValida(operacion));
+
+        return operacion;
+    }
+
+    public static boolean esOperacionValida(String operacion) {
+        return operacion.matches("[+\\-xX/*%]");
+    }
+
+    public static double obtenerNumero(Scanner sc, String orden) {
+        String numero;
+        do {
+            System.out.println("\n --- Introduzca el " + orden + " número. ---");
+            numero = sc.nextLine();
+        } while (!esNumeroValido(numero));
+
+        return Double.parseDouble(numero);
+    }
+
+    public static boolean esNumeroValido(String numero) {
+        return numero.matches("[+-]?[\\d]*[.]?[\\d]+");
+    }
+
+    public static double calcularResultado(String operacion, double num1, double num2) {
+        switch (operacion) {
+            case "+":
+                return num1 + num2;
+            case "-":
+                return num1 - num2;
+            case "x":
+            case "X":
+                return num1 * num2;
+            case "/":
+                if (num2 == 0) {
+                    System.err.println("Error: No se puede dividir por cero.");
+                    return Double.NaN;
                 }
-            } while (comprobar != true);
-
-            String numero1;
-            do {
-                System.out.println("\n --- Introdueix el primer numero. ---");
-                numero1 = sc.nextLine();
-            } while (!numero1.matches("[+-]?[\\d]*[.]?[\\d]+"));
-            double nume1 = Double.parseDouble(numero1);
-            double n1 = new Double(numero1);
-
-            String numero2;
-            do {
-                System.out.println("\n ---Introdueix el segon numero.---");
-                numero2 = sc.nextLine();
-            } while (!numero2.matches("[+-]?[\\d]*[.]?[\\d]+"));
-            double nume2 = Double.parseDouble(numero2);
-            double n2 = new Double(numero2);
-            do {
-                comprobar = true;
-                switch (operacion) {
-                    case "+":
-                        res = n1 + n2;
-                        break;
-                    case "-":
-                        res = n1 - n2;
-                        break;
-                    case "x":
-                    case "X":
-                        res = n1 * n2;
-                        break;
-                    case "/":
-                        while (n2 == 0) {
-                            do {
-                                System.err.println(" Al denominador hi ha un zero \n"
-                                        + "per a  evitar errors coloca un altre valor.");
-                                numero2 = sc.nextLine();
-                            } while (!numero2.matches("[+-]?[\\d]*[.]?[\\d]+"));
-                            nume2 = Double.parseDouble(numero2);
-                            n2 = new Double(numero2);
-                        }
-                        res = n1 / n2;
-                        break;
-                    case "*":
-                        res = Math.pow(n1, n2);
-                        break;
-                    case "%":
-                        while (n2 == 0) {
-                            do {
-                                System.err.println("---Al denominador hi ha un zero \n"
-                                        + "per a  evitar errors coloca un altre valor.---");
-                                numero2 = sc.nextLine();
-                            } while (!numero2.matches("[+-]?[\\d]*[.]?[\\d]+"));
-                            nume2 = Double.parseDouble(numero2);
-                            n2 = new Double(numero2);
-                        }
-                        res = n1 % n2;
-                        break;
+                return num1 / num2;
+            case "*":
+                return Math.pow(num1, num2);
+            case "%":
+                if (num2 == 0) {
+                    System.err.println("Error: No se puede calcular el residuo de la división por cero.");
+                    return Double.NaN;
                 }
-            } while (comprobar != true);
+                return num1 % num2;
+            default:
+                System.err.println("Error: Operación no válida.");
+                return Double.NaN;
+        }
+    }
 
-            System.out.println("(" + numero1 + ") " + operacion + " (" + numero2 + ")" + " = " + res);
-            System.out.println("\n ---Vols continuar operant?--- \n");
-            System.out.println(" [s/n]");
-            do {
-                comprobar = true;
-                operacion = sc.nextLine();
+    public static boolean continuarOperando(Scanner sc) {
+        System.out.println("\n ---¿Desea continuar operando?--- \n");
+        System.out.println(" [s/n]");
 
-                switch (operacion) {
-                    case "s":
-                    case "S":
-                    case "n":
-                    case "N":
-                        break;
-                    default:
-                        System.err.println("\n Error, posa un valor vàlid. \n");
-                        comprobar = false;
-                }
-            } while (comprobar != true);
-        } while (operacion.equals("s") || operacion.equals("S"));
-        System.out.println("\n\t|---GOOD BYE---|");
+        String respuesta;
+        do {
+            respuesta = sc.nextLine().toLowerCase();
+            if (!respuesta.equals("s") && !respuesta.equals("n")) {
+                System.err.println("\n Error, por favor ingrese 's' para continuar o 'n' para salir. \n");
+            }
+        } while (!respuesta.equals("s") && !respuesta.equals("n"));
+
+        return respuesta.equals("s");
     }
 }
-
